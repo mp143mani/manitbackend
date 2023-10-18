@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
    
     
     batch:{type:'string',require:true},

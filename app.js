@@ -1,39 +1,40 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var cors = require("cors");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var taskRouter = require("./routes/task");
-var InterviewRouter = require("./routes/interview");
-var taskSolutionRouter = require("./routes/taskSolution");
-var webcodeRouter = require("./routes/webcode");
-var queryRouter = require("./routes/query");
-var classRouter = require("./routes/class");
-const {dbUrl} = require("./dbConfig");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/UserRoutes");
+const taskRouter = require("./routes/routestask");
+const InterviewRouter = require("./routes/routesinterview");
+const taskSolutionRouter = require("./routes/routestaskSolution");
+const webcodeRouter = require("./routes/routeswebcode");
+const queryRouter = require("./routes/query");
+const classRouter = require("./routes/classroutes");
+const { dbUrl } = require("./database");
 const { mongoose } = require("mongoose");
 
-console.log(dbUrl)
-mongoose.connect(dbUrl, { useNewUrlParser: true,useUnifiedTopology: true}  )
-.then(
-  (res) =>  {
-    console.log(`Database is Connected`)
-  },
-  err => { console.log(err) }
-);
+console.log(dbUrl);
+mongoose
+  .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(
+    (res) => {
+      console.log(`Database is Connected`);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
 
-var logger = require("morgan");
+const logger = require("morgan");
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) =>
-  res.send(`Server Running`)
-);
+app.get("/", (req, res) => res.send(`Server Running`));
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -50,8 +51,7 @@ app.use("/webcode", webcodeRouter);
 app.use("/query", queryRouter);
 app.use("/class", classRouter);
 
-
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
